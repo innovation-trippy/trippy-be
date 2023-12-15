@@ -4,7 +4,12 @@ import { AvsecController } from './avsec.controller';
 import { HttpModule } from '@nestjs/axios';
 
 @Module({
-  imports: [HttpModule],
+  imports: [
+    HttpModule.register({
+      timeout: 5000,
+      maxRedirects: 5
+    })
+  ],
   controllers: [AvsecController],
   providers: [AvsecService],
 })

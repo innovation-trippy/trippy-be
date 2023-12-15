@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
 import { AvsecService } from './avsec.service';
-import { HttpService } from '@nestjs/axios';
 import { Observable } from 'rxjs';
 
 @Controller('avsec')
@@ -18,8 +17,8 @@ export class AvsecController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.avsecService.findOne(+id);
+  findOne(@Param('id') id: string): any {
+    return this.avsecService.findOne(id);
   }
   /*
     @Patch(':id')
