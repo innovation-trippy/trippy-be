@@ -1,0 +1,12 @@
+name: trippy-be
+app: node@16
+options:
+  git:
+    branch: main
+    url: https://github.com/cloudtype-examples/node-express.git
+  env:
+    - name: NODE_ENV
+      value: production
+  install: npm ci --production
+  ports: 3000
+  start: npm start
