@@ -20,18 +20,18 @@ jobs:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
           project: trippy/trippy-be
           stage: main
-          yaml: |
-          name: trippy-be
-          app: node@16
-          options:
-            env:
-              - name: NODE_ENV
-                value: production
-            ports: 3000
-            build: npm run build
-            start: npm run start:prod
-          context:
-            git:
-              url: https://github.com/innovation-trippy/trippy-be.git
-              branch: main
-            preset: nest.js
+          yaml:
+            name: trippy-be
+            app: node@16
+            options:
+              env:
+                - name: NODE_ENV
+                  value: production
+              ports: 3000
+              build: npm run build
+              start: npm run start:prod
+            context:
+              git:
+                url: https://github.com/innovation-trippy/trippy-be.git
+                branch: main
+              preset: nest.js
