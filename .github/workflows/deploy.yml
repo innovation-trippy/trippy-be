@@ -21,17 +21,17 @@ jobs:
           project: trippy/trippy-be
           stage: main
           yaml: |
-            name: trippy-be
-            app: node@16
-            options:
-              env:
-                - name: NODE_ENV
-                  value: production
-              install: npm i -g @nestjs/cli
-              ports: 3000
-              start: npm run start:dev
-            context:
-              git:
-                url: git@github.com:${{ github.repository }}.git
-                ref: ${{ github.ref }}
-              preset: nest.js
+          name: trippy-be
+          app: node@16
+          options:
+            env:
+              - name: NODE_ENV
+                value: production
+            ports: 3000
+            build: npm run build
+            start: npm run start:prod
+          context:
+            git:
+              url: https://github.com/innovation-trippy/trippy-be.git
+              branch: main
+            preset: nest.js
