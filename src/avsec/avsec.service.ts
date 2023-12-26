@@ -3,7 +3,7 @@ import axios from 'axios';
 import { CheerioAPI, load } from 'cheerio';
 
 const avsecUrl = 'https://www.avsec365.or.kr/';
-const apiSearchUrl = 'https://www.avsec365.or.kr/avsc/airsforbid/list.do?searchCnd=KR&searchWrd=';
+const apiSearchUrl = 'https://www.avsec365.or.kr/avsc/airsforbid/list.do?searchCnd=ALL&searchWrd=';
 
 
 // 금지물품 이름 가져오기
