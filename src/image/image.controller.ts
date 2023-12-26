@@ -13,8 +13,16 @@ export class ImageController {
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('files'))
-  uploadFile(@UploadedFiles() files: Array<Express.Multer.File>) {
-    console.log(files);
+  uploadFile(
+    @UploadedFiles() 
+    files: Array<Express.Multer.File>) {
+    let filename = [];
+    for (const file of files) {
+      filename.push(filename);
+    }
+    return {
+      filenames: filename,
+    }
   }
 
   @Post('uploadAndValidate')
