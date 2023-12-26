@@ -18,7 +18,7 @@ export class ImageController {
     files: Array<Express.Multer.File>) {
     let filename = [];
     for (const file of files) {
-      filename.push(filename);
+      filename.push(file.filename);
     }
     return {
       filenames: filename,
