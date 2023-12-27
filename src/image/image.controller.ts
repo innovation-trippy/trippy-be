@@ -8,18 +8,21 @@ export class ImageController {
 
   @Get()
   getForbid() {
-    return this.imageService.getForbid();
+    return this.imageService.getDetectedForbid();
+  }
+
+  @Get('file')
+  getImage() {
+    return this.imageService.getUserImage();
   }
 
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
-    @UploadedFile() 
-    file: Express.Multer.File) {
-    let filename = file.size;
-    return {
-      filenames: filename,
-    }
+    @UploadedFile() file?: Express.Multer.File) {
+    return this.imageService.detectObjectFromFile(
+      file,
+    )
   }
 
   @Post('uploadAndValidate')

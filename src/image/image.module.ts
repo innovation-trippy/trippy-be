@@ -3,6 +3,8 @@ import { ImageService } from './image.service';
 import { ImageController } from './image.controller';
 import { MulterModule } from '@nestjs/platform-express';
 import { extname } from 'path';
+import * as multer from 'multer';
+import { IMAGE_FOLDER_PATH } from 'src/common/const/path.const';
 
 @Module({
   controllers: [ImageController],
@@ -21,10 +23,16 @@ import { extname } from 'path';
             false,
           );
         }
-
         return cb(null, true);
-        
-      }
+      },
+      storage: multer.diskStorage({
+        destination: function(req, res, cb) {
+          cb(null, IMAGE_FOLDER_PATH)
+        },
+        filename: function(req, file, cb) {
+          cb(null, `user_image${extname(file.originalname)}`)
+        }
+      })
     })
   ]
 })
