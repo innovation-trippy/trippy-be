@@ -16,7 +16,7 @@ export class ImageController {
   uploadFile(
     @UploadedFile() 
     file: Express.Multer.File) {
-    let filename = file.filename;
+    let filename = file.size;
     return {
       filenames: filename,
     }
