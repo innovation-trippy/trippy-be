@@ -12,14 +12,11 @@ export class ImageController {
   }
 
   @Post('upload')
-  @UseInterceptors(FileInterceptor('files'))
+  @UseInterceptors(FileInterceptor('file'))
   uploadFile(
-    @UploadedFiles() 
-    files: Array<Express.Multer.File>) {
-    let filename = [];
-    for (const file of files) {
-      filename.push(file.filename);
-    }
+    @UploadedFile() 
+    file: Express.Multer.File) {
+    let filename = file.size;
     return {
       filenames: filename,
     }
