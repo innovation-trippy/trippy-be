@@ -26,15 +26,16 @@ export class ImageService {
                 null,
                 { params }
             );
+            console.log(response.data)
             const detected_object = await response.data.class_names
             console.log(detected_object);
-            detected_object.forEach(item=> {
-                console.log(item);
-                const result = this.avsecService.getForbidInfo(item);
-                results.push(result);
-            });
-            console.log(results)
-            return results;
+            // detected_object.forEach(item=> {
+            //     console.log(item);
+            //     const result = this.avsecService.getForbidInfo(item);
+            //     results.push(result);
+            // });
+            // console.log(results)
+            // return results;
         } catch (error) {
             console.error('Error:', error);
             throw error;
