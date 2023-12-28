@@ -26,7 +26,8 @@ export class ImageService {
                 null,
                 { params }
             );
-            const detected_object = response.data.class_names
+            const detected_object = await response.data.class_names
+            console.log(detected_object);
             detected_object.forEach(item=> {
                 console.log(item);
                 const result = this.avsecService.getForbidInfo(item);
