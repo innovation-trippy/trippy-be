@@ -6,5 +6,6 @@ import { AvsecController } from './avsec.controller';
   imports: [],
   controllers: [AvsecController],
   providers: [AvsecService],
+  exports: [AvsecService],
 })
 export class AvsecModule { }

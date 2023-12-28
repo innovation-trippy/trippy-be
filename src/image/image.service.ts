@@ -1,11 +1,15 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { join } from 'path';
+import { AvsecService } from 'src/avsec/avsec.service';
 import { PUBLIC_IMAGE_PATH } from 'src/common/const/path.const';
 
 @Injectable()
 export class ImageService {
-    constructor(private readonly httpService: HttpService) {}
+    constructor(
+        private readonly httpService: HttpService,
+        private readonly avsecService: AvsecService,
+        ) {}
 
     getDetectedForbid() {
         return "Hello World!!";
@@ -13,6 +17,7 @@ export class ImageService {
 
     async detectObjectFromFile(file: Express.Multer.File) {
         try {
+            let results = [];
             let filepath = `${join(PUBLIC_IMAGE_PATH, file.filename)}`;
             const params = { filepath };
 
@@ -21,7 +26,13 @@ export class ImageService {
                 null,
                 { params }
             );
-            return response.data;
+            const detected_object = response.data.class_names
+            detected_object.forEach(item=> {
+                const result = this.avsecService.getForbidInfo(item);
+                results.push(result);
+            });
+            console.log(results)
+            return results;
         } catch (error) {
             console.error('Error:', error);
             throw error;

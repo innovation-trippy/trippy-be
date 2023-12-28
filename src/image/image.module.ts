@@ -6,10 +6,12 @@ import { extname } from 'path';
 import * as multer from 'multer';
 import { IMAGE_FOLDER_PATH } from 'src/common/const/path.const';
 import { HttpModule } from '@nestjs/axios';
+import { AvsecModule } from 'src/avsec/avsec.module';
+import { AvsecService } from 'src/avsec/avsec.service';
 
 @Module({
   controllers: [ImageController],
-  providers: [ImageService],
+  providers: [ImageService, AvsecService],
   imports: [
     MulterModule.register({
       limits: {
@@ -41,6 +43,7 @@ import { HttpModule } from '@nestjs/axios';
         maxRedirects: 5,
       }),
     }),
+    AvsecModule,
   ]
 })
 export class ImageModule {}
