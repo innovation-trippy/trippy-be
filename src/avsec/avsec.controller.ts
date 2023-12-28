@@ -5,6 +5,11 @@ import { AvsecService } from './avsec.service';
 export class AvsecController {
   constructor(private readonly avsecService: AvsecService) { }
 
+  @Get()
+  getTest() {
+    return this.avsecService.test();
+  }
+
   @Get(':id')
   searchForbidId(@Param('id') id: string): any {
     return this.avsecService.getForbidInfo(id);

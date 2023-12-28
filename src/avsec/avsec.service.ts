@@ -97,4 +97,14 @@ export class AvsecService {
       return new Error('웹페이지를 가져오지 못했습니다.');
     }
   }
+
+  async test() {
+    const urlWithId = `${apiSearchUrl}cat`
+    try {
+      return parseForbidInfo(urlWithId);
+    } catch (error) {
+      console.log(error);
+      return new Error('웹페이지를 가져오지 못했습니다.');
+    }
+  }
 }

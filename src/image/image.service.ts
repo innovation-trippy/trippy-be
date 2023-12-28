@@ -18,7 +18,7 @@ export class ImageService {
     async test() {
         try {
             let results = [];
-            let filepath = `${join(PUBLIC_IMAGE_PATH, 'user_image.jpeg')}`;
+            let filepath = `${join(PUBLIC_IMAGE_PATH, 'user_image.jpg')}`;
             const params = { filepath };
 
             const response = await this.httpService.axiosRef.post(
@@ -28,12 +28,13 @@ export class ImageService {
             );
 
             const detected_object = response.data.class_name
-            detected_object.forEach(async item=> {
-                console.log(item);
+            let promises = detected_object.map(async item=> {
                 const result = await this.avsecService.getForbidInfo(item);
-                results.push(result);
+                return result
             });
-            console.log(results)
+            await Promise.all(promises).then(result => {
+                results = result.reduce((acc, cur) => acc.concat(cur), []);
+            });
             return results;
         } catch (error) {
             console.error('Error:', error);
@@ -52,11 +53,14 @@ export class ImageService {
                 null,
                 { params }
             );
-
+            
             const detected_object = response.data.class_name
-            detected_object.forEach(async item=> {
+            let promises = detected_object.map(async item=> {
                 const result = await this.avsecService.getForbidInfo(item);
-                results.push(result);
+                return result
+            });
+            await Promise.all(promises).then(result => {
+                results = result.reduce((acc, cur) => acc.concat(cur), []);
             });
             return results;
         } catch (error) {
