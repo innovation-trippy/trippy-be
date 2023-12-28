@@ -14,6 +14,32 @@ export class ImageService {
     getDetectedForbid() {
         return "Hello World!!";
     }
+    
+    async test() {
+        try {
+            let results = [];
+            let filepath = `${join(PUBLIC_IMAGE_PATH, 'user_image.jpeg')}`;
+            const params = { filepath };
+
+            const response = await this.httpService.axiosRef.post(
+                'https://trippy-ai-be-dreqf.run.goorm.site/upload',
+                null,
+                { params }
+            );
+
+            const detected_object = response.data.class_name
+            detected_object.forEach(async item=> {
+                console.log(item);
+                const result = await this.avsecService.getForbidInfo(item);
+                results.push(result);
+            });
+            console.log(results)
+            return results;
+        } catch (error) {
+            console.error('Error:', error);
+            throw error;
+        }
+    }
 
     async detectObjectFromFile(file: Express.Multer.File) {
         try {
@@ -26,16 +52,13 @@ export class ImageService {
                 null,
                 { params }
             );
-            console.log(response.data)
-            const detected_object = await response.data.class_names
-            console.log(detected_object);
-            // detected_object.forEach(item=> {
-            //     console.log(item);
-            //     const result = this.avsecService.getForbidInfo(item);
-            //     results.push(result);
-            // });
-            // console.log(results)
-            // return results;
+
+            const detected_object = response.data.class_name
+            detected_object.forEach(async item=> {
+                const result = await this.avsecService.getForbidInfo(item);
+                results.push(result);
+            });
+            return results;
         } catch (error) {
             console.error('Error:', error);
             throw error;

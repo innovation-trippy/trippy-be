@@ -11,6 +11,11 @@ export class ImageController {
     return this.imageService.getDetectedForbid();
   }
 
+  @Get('test')
+  getTest() {
+    return this.imageService.test();
+  }
+
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
