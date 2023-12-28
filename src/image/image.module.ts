@@ -5,6 +5,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { extname } from 'path';
 import * as multer from 'multer';
 import { IMAGE_FOLDER_PATH } from 'src/common/const/path.const';
+import { HttpModule } from '@nestjs/axios';
 
 @Module({
   controllers: [ImageController],
@@ -33,7 +34,13 @@ import { IMAGE_FOLDER_PATH } from 'src/common/const/path.const';
           cb(null, `user_image${extname(file.originalname)}`)
         }
       })
-    })
+    }),
+    HttpModule.registerAsync({
+      useFactory: () => ({
+        timeout: 8000,
+        maxRedirects: 5,
+      }),
+    }),
   ]
 })
 export class ImageModule {}

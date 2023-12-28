@@ -1,4 +1,4 @@
-import { Body, Controller, FileTypeValidator, Get, ParseFilePipe, Post, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ImageService } from './image.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -11,11 +11,6 @@ export class ImageController {
     return this.imageService.getDetectedForbid();
   }
 
-  @Get('file')
-  getImage() {
-    return this.imageService.getUserImage();
-  }
-
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   uploadFile(
@@ -23,21 +18,5 @@ export class ImageController {
     return this.imageService.detectObjectFromFile(
       file,
     )
-  }
-
-  @Post('uploadAndValidate')
-  uploadAndValidate(
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          new FileTypeValidator({ fileType: 'image/jpeg'}),
-        ],
-      }),
-    )
-    file: Express.Multer.File
-  ) {
-    return {
-      file: file.filename,
-    }
   }
 }
