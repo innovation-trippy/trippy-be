@@ -65,8 +65,12 @@ async function parseExampleImg($: CheerioAPI, elem): Promise<any> {
     new URLSearchParams({
       fileId : fileId,
     }));
-  response.data.fileList.forEach((data)=>{
-    exampleImg.push(imgUrl + data.fileNo)});
+  const fileList = response.data.fileList
+  if (fileList) {
+    fileList.forEach((data)=>{
+      exampleImg.push(imgUrl + data.fileNo)});
+  }
+  
   return exampleImg;
 }
 
