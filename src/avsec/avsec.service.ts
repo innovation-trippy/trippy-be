@@ -88,13 +88,13 @@ async function parseForbidInfo(urlWithId: string): Promise<any> {
   for (const elem of trElement) {
     var korName;
     var engName;
-    var imgSrc = [];
+    var forbidImg = [];
     var forbidRule = [];
     var specialRule;
     var exampleImg
 
     [korName, engName] = parseItemName($, elem);
-    imgSrc = parseForbidImg($, elem);
+    forbidImg = parseForbidImg($, elem);
     forbidRule = parseForbidRule($, elem);
     specialRule = parseSpecialRule($, elem);
     exampleImg = await parseExampleImg($, elem);
@@ -103,7 +103,7 @@ async function parseForbidInfo(urlWithId: string): Promise<any> {
     result.push({
       korName,
       engName,
-      imgSrc,
+      forbidImg,
       forbidRule,
       specialRule,
       exampleImg,
