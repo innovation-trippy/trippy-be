@@ -8,12 +8,14 @@ const imgSearchUrl = 'https://www.avsec365.or.kr/etc/file/list.do';
 const imgUrl = 'https://www.avsec365.or.kr/etc/file/image.do?fileNo=';
 
 // 금지물품 이름 가져오기
-function parseItemName($: CheerioAPI, elem): string {
-  var name;
-  $(elem).find('span').each((index, elem) => {
-    if (index == 0) name = $(elem).text();
+function parseItemName($: CheerioAPI, elem) {
+  var korName;
+  var engName;
+  $(elem).find('span').map((i, elem) => {
+    if(i==0) korName = $(elem).text().trim();
+    if(i==1) engName = $(elem).text().trim();
   });
-  return name;
+  return [korName, engName];
 }
 
 // 이미지 태그에서 금지 이미지와 규칙 가져오기 
@@ -80,13 +82,14 @@ async function parseForbidInfo(urlWithId: string): Promise<any> {
   // 금지물품 정보 가져오기
   const trElement = $('[id^="tr_"]');
   for (const elem of trElement) {
-    var name;
+    var korName;
+    var engName;
     var imgSrc = [];
     var forbidRule = [];
     var specialRule;
     var exampleImg
 
-    name = parseItemName($, elem);
+    [korName, engName] = parseItemName($, elem);
     imgSrc = parseForbidImg($, elem);
     forbidRule = parseForbidRule($, elem);
     specialRule = parseSpecialRule($, elem);
@@ -94,7 +97,8 @@ async function parseForbidInfo(urlWithId: string): Promise<any> {
 
     // 금지물품 정보 담은 결과 생성
     result.push({
-      name,
+      korName,
+      engName,
       imgSrc,
       forbidRule,
       specialRule,
