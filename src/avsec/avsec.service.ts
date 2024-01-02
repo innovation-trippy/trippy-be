@@ -4,7 +4,8 @@ import { CheerioAPI, load } from 'cheerio';
 
 const avsecUrl = 'https://www.avsec365.or.kr/';
 const apiSearchUrl = 'https://www.avsec365.or.kr/avsc/airsforbid/list.do?searchCnd=ALL&searchWrd=';
-
+const imgSearchUrl = 'https://www.avsec365.or.kr/etc/file/list.do';
+const imgUrl = 'https://www.avsec365.or.kr/etc/file/image.do?fileNo=';
 
 // 금지물품 이름 가져오기
 function parseItemName($: CheerioAPI, elem): string {
@@ -22,7 +23,7 @@ function parseImg($: CheerioAPI, elem, parse) {
     if (index > 0) parseThings = parse($, index, elem);
   });
   return parseThings;
-} 
+}
 
 // 금지 이미지 가져오기
 function parseForbidImg($: CheerioAPI, elem) {
@@ -51,6 +52,22 @@ function parseSpecialRule($: CheerioAPI, elem) {
   return specialRule;
 }
 
+// 물품 이미지 가져오기
+async function parseExampleImg($: CheerioAPI, elem): Promise<any> {
+  var forbidNo;
+  var fileId;
+  var exampleImg = [];
+
+  [forbidNo, fileId] = $(elem).find('[id^="sampleId_"]').find('script').text().match(/\d+/g);
+  const response = await axios.post(imgSearchUrl, 
+    new URLSearchParams({
+      fileId : fileId,
+    }));
+  response.data.fileList.forEach((data)=>{
+    exampleImg.push(imgUrl + data.fileNo)});
+  return exampleImg;
+}
+
 async function parseForbidInfo(urlWithId: string): Promise<any> {
   let result = [];
 
@@ -62,25 +79,28 @@ async function parseForbidInfo(urlWithId: string): Promise<any> {
 
   // 금지물품 정보 가져오기
   const trElement = $('[id^="tr_"]');
-  trElement.each(function (i, elem) {
+  for (const elem of trElement) {
     var name;
     var imgSrc = [];
     var forbidRule = [];
     var specialRule;
+    var exampleImg
 
     name = parseItemName($, elem);
     imgSrc = parseForbidImg($, elem);
     forbidRule = parseForbidRule($, elem);
     specialRule = parseSpecialRule($, elem);
+    exampleImg = await parseExampleImg($, elem);
 
     // 금지물품 정보 담은 결과 생성
-    result[i] = {
+    result.push({
       name,
       imgSrc,
       forbidRule,
       specialRule,
-    }
-  });
+      exampleImg,
+    })
+  };
   return result;
 }
 
@@ -99,7 +119,7 @@ export class AvsecService {
   }
 
   async test() {
-    const urlWithId = `${apiSearchUrl}cat`
+    const urlWithId = `${apiSearchUrl}치약`;
     try {
       return parseForbidInfo(urlWithId);
     } catch (error) {
