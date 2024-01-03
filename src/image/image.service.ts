@@ -44,7 +44,6 @@ export class ImageService {
 
     async detectObjectFromFile(file: Express.Multer.File) {
         try {
-            let results = [];
             let filepath = `${join(PUBLIC_IMAGE_PATH, file.filename)}`;
             const params = { filepath };
 
@@ -53,16 +52,7 @@ export class ImageService {
                 null,
                 { params }
             );
-            
-            const detected_object = response.data.class_name
-            let promises = detected_object.map(async item=> {
-                const result = await this.avsecService.getForbidInfo(item);
-                return result
-            });
-            await Promise.all(promises).then(result => {
-                results = result.reduce((acc, cur) => acc.concat(cur), []);
-            });
-            return results;
+            return response.data;
         } catch (error) {
             console.error('Error:', error);
             throw error;
