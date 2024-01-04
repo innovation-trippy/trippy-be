@@ -55,8 +55,9 @@ export class ImageService {
             const resNameSet = new Set(response.data.class_name);
             const uniqueResName = [...resNameSet];
             const uniqueResString = uniqueResName.join();
-            console.log(uniqueResString);
-            return response.data;
+            return {
+                class_name: uniqueResString,
+            };
         } catch (error) {
             console.error('Error:', error);
             throw error;
