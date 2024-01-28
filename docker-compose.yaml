@@ -1,0 +1,15 @@
+services:
+  backend:
+    container_name: backend
+    image: backend
+    ports:
+      - "3000:3000"
+
+  nginx:
+    container_name: nginx
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./conf:/etc/nginx/conf.d
+    
