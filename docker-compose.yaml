@@ -2,14 +2,22 @@ services:
   backend:
     container_name: backend
     image: backend
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
 
   nginx:
     container_name: nginx
     image: nginx
+    build:
+      context: ./conf
+      dockerfile: Dockerfile
     ports:
       - "80:80"
     volumes:
       - ./nginx/conf:/etc/nginx/conf.d
+    depends_on:
+      - backend
     
