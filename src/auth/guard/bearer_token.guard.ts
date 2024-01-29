@@ -30,7 +30,7 @@ export class AccessTokenGuard extends BearerTokenGuard {
         await super.canActivate(context);
         const req = context.switchToHttp().getRequest();
 
-        return req.user;
+        return req.email;
     }
 }
 

@@ -20,6 +20,7 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule.register({defaultStrategy: 'kakao'}),
     UserModule,
   ],
+  exports: [AuthService],
   controllers: [AuthController],
   providers: [AuthService, KakaoStrategy],
 })

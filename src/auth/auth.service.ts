@@ -21,6 +21,29 @@ export class AuthService {
         return verifiedUser;
     }
 
+    // 카카오 로그아웃
+    // async signOutWithKakao(access_token) {
+
+    //     if (!access_token) {
+    //         return false;
+    //     }
+
+    //     const tokenHeaders = {
+    //         'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+    //         'Authorization': `Bearer ${access_token}`,
+    //     };
+
+    //     const kakao_logout_url = 'https://kapi.kakao.com/v1/user/logout';
+
+    //     const response = this.httpService.post(kakao_logout_url, '', {
+    //         headers: tokenHeaders,
+    //     });
+
+    //     const res = await firstValueFrom(response);
+
+    //     return true;
+    // }
+
     // 이메일 유저 로그인
     async loginWithEmail(email, password) {
         const verifiedUser = await this.userService.signInUserWithEmail(email, password);

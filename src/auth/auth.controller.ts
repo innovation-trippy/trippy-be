@@ -28,10 +28,12 @@ export class AuthController {
     @Res() res,
   ) {
     const { accessToken, refreshToken } = await this.authService.getTokenWithKakao(
-      req.user,
+      req.user.user,
     );
+    res.cookie('kakaoToken', req.user.kakaoToken, { httpOnly: true });
     res.cookie('accessToken', accessToken, { httpOnly: true });
     res.cookie('refreshToken', refreshToken, { httpOnly: true });
+
     return res.send({
       message: 'success'
     });
@@ -72,11 +74,18 @@ export class AuthController {
   ) {
     res.cookie('accessToken', '', { maxAge: 0 });
     res.cookie('refreshToken', '', { maxAge: 0 });
+
+    // const kakaoToken = req.cookies.kakaoToken;
+
+    // if (kakaoToken) {
+    //   this.authService.signOutWithKakao(kakaoToken);
+    //   res.cookie('kakaoToken', '', {maxAge: 0});
+    // }
+
     return res.send({
       message: 'success'
     })
   }
-
 
   // access 토큰 재발급
   @Post('token/access')
@@ -107,7 +116,7 @@ export class AuthController {
     const token = req.token;
 
     const newToken = this.authService.rotateToken(token, true);
-    
+
     console.log('refresh token rotated');
 
     res.cookie('refreshToken', newToken, { httpOnly: true });
