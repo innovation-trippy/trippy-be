@@ -2,6 +2,7 @@ import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { Supabase } from 'src/common/supabase/supabase';
 
 const FORBID = 'FORBID_ITEM_TB';
+const COMMENT = 'ITEM_COMMENT_TB';
 const EXAMPLE_IMG = 'ITEM_EXAMPLE_IMG_TB';
 const FORBID_IMG = 'ITEM_FORBID_RULE_TB';
 
@@ -17,7 +18,8 @@ export class ForbidService {
             engName, 
             specialRule,
             ${EXAMPLE_IMG}(*), 
-            ${FORBID_IMG}(*)`)
+            ${FORBID_IMG}(*)
+            ${COMMENT}(*)`)
             .or(`korName.ilike.%${item}%,engName.ilike.%${item}%`);
 
         if (error)  console.log(error);
