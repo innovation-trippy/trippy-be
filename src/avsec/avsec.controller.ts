@@ -10,9 +10,14 @@ export class AvsecController {
     return this.avsecService.test();
   }
 
-  @Get(':id')
-  searchForbidId(@Param('id') id: string): any {
-    return this.avsecService.getForbidInfo(id);
+  @Get('search/:item')
+  searchForbidId(@Param('item') item: string): any {
+    return this.avsecService.getForbidInfo(item);
   }
+
+  // @Get('save/:item')
+  // saveForbidItem(@Param('item') item: string): any {
+  //   return this.avsecService.saveForbidInfo(item);
+  // }
   
 }
