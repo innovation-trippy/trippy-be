@@ -55,4 +55,11 @@ export class CommentService {
         console.log(error)
         return data;
     }
+
+    async updateLikeCount(commentId, likeCount) {
+        const {data, error} = await this.supabase.getClient()
+        .from(COMMENT)
+        .update({likeCount})
+        .eq('id', commentId)
+    }
 }

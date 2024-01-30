@@ -46,4 +46,13 @@ export class CommentController {
     return this.commentService.deleteComment(userEmail, commentId);
   }
 
+  @Post('likecount')
+  updateLikeCount(
+    @Body('commendIt') commentId,
+    @Body('likeCount') likeCount,
+  ) {
+    return this.commentService.updateLikeCount(commentId, likeCount);
+  }
+
+
 }
