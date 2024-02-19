@@ -19,5 +19,10 @@ export class AvsecController {
   // saveForbidItem(@Param('item') item: string): any {
   //   return this.avsecService.saveForbidInfo(item);
   // }
+
+  // @Get('save')
+  // saveUsForbidInfo() {
+  //   return this.avsecService.saveUsForbidInfo();
+  // }
   
 }
