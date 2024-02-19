@@ -8,6 +8,7 @@ import { IMAGE_FOLDER_PATH } from 'src/common/const/path.const';
 import { HttpModule } from '@nestjs/axios';
 import { AvsecModule } from 'src/avsec/avsec.module';
 import { AvsecService } from 'src/avsec/avsec.service';
+import { ForbidModule } from 'src/forbid/forbid.module';
 
 @Module({
   controllers: [ImageController],
@@ -44,6 +45,7 @@ import { AvsecService } from 'src/avsec/avsec.service';
       }),
     }),
     AvsecModule,
+    ForbidModule,
   ]
 })
 export class ImageModule {}
