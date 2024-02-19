@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { ConfigModule } from '@nestjs/config';
 import { CommentModule } from './comment/comment.module';
 import { ForbidModule } from './forbid/forbid.module';
+import { RecommendModule } from './recommend/recommend.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ForbidModule } from './forbid/forbid.module';
     }),
     ForbidModule,
     CommentModule,
+    RecommendModule,
   ],
   controllers: [AppController],
   providers: [AppService],
