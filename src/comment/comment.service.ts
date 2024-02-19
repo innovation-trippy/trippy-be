@@ -39,7 +39,7 @@ export class CommentService {
         .eq('userEmail', userEmail)
         .eq('itemId', itemId).select();
 
-        if (error) console.log(error)
+        if (error) console.log(error);
 
         return data;
     }
@@ -51,15 +51,19 @@ export class CommentService {
         .eq('id', commentId)
         .eq('userEmail', userEmail);
 
-        console.log(data)
-        console.log(error)
+        if (error)  console.log(error);
+
         return data;
     }
 
     async updateLikeCount(commentId, likeCount) {
         const {data, error} = await this.supabase.getClient()
         .from(COMMENT)
-        .update({likeCount})
-        .eq('id', commentId)
+        .upsert({id:commentId, likeCount})
+        .select();
+
+        if (error) console.log(error);
+
+        return data;
     }
 }

@@ -46,9 +46,9 @@ export class CommentController {
     return this.commentService.deleteComment(userEmail, commentId);
   }
 
-  @Post('likecount')
+  @Patch('likecount')
   updateLikeCount(
-    @Body('commendIt') commentId,
+    @Body('commentId') commentId,
     @Body('likeCount') likeCount,
   ) {
     return this.commentService.updateLikeCount(commentId, likeCount);
