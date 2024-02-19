@@ -13,11 +13,12 @@ type Forbid = {
 export class ForbidController {
   constructor(private readonly forbidService: ForbidService) {}
 
-  @Get(':item')
+  @Get(':nation/:item')
   getForbid(
+    @Param('nation') nation: string,
     @Param('item') item: string,
   ) {
-    return this.forbidService.getForbidItem(item);
+    return this.forbidService.getForbidItem(nation, item);
   }
 
   // @Post()

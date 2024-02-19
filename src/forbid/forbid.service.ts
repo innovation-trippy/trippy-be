@@ -10,7 +10,7 @@ const FORBID_IMG = 'ITEM_FORBID_RULE_TB';
 export class ForbidService {
     constructor(private readonly supabase: Supabase) { }
 
-    async getForbidItem(item) {
+    async getForbidItem(nation, item) {
         const { data, error } = await this.supabase.getClient()
             .from(FORBID)
             .select(`id, 
@@ -18,18 +18,19 @@ export class ForbidService {
             engName, 
             specialRule,
             ${EXAMPLE_IMG}(*), 
-            ${FORBID_IMG}(*)
-            ${COMMENT}(*)`)
-            .or(`korName.ilike.%${item}%,engName.ilike.%${item}%`);
+            ${FORBID_IMG}(*),
+            nationName`)
+            .or(`korName.ilike.%${item}%,engName.ilike.%${item}%`)
+            .eq('nationName', nation);
 
         if (error)  console.log(error);
 
         return data;
     }
 
-    async createForbidItem({ korName, engName, forbidImg, forbidRule, specialRule, exampleImg }) {
+    async createForbidItem({ korName, engName, forbidImg, forbidRule, specialRule, exampleImg, nationName }) {
         const { data, error } = await this.supabase.getClient().from(FORBID).insert([{
-            korName, engName, specialRule
+            korName, engName, specialRule, nationName
         }]).select();
 
         if (error) {
