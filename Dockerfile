@@ -13,7 +13,8 @@ RUN npm install
 COPY . .
 
 # FROM에서 설정한 이미지 위에서 스크립트 혹은 명령을 실행
+RUN npm install --global pm2
 RUN npm run build
 
 # Start the server using the production build
-CMD [ "npm", "start:prod" ]
+CMD [ "pm2-runtime", "start", "dist/main.js" ]
