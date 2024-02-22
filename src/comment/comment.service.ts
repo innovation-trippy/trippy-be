@@ -59,7 +59,8 @@ export class CommentService {
     async updateLikeCount(commentId, likeCount) {
         const {data, error} = await this.supabase.getClient()
         .from(COMMENT)
-        .upsert({id:commentId, likeCount})
+        .update({likeCount})
+        .eq('id', commentId)
         .select();
 
         if (error) console.log(error);
