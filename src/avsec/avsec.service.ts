@@ -150,52 +150,52 @@ export class AvsecService {
   //   }
   // }
 
-  async saveUsForbidInfo() {
-    // const urlWithId = `${apiUsSearchUrl}`;
-    const urlWithId = 'https://www.tsa.gov/travel/security-screening/whatcanibring/all-list';
-    try {
-      const response = await axios.get(urlWithId);
-      const $ = load(response.data);
-      const trElements = $('.view-content > table > tbody > tr');
-      var i = 0
-      for (const elem of trElements) {
-        const engName = $(elem).find('strong').text().trim();
-        const specialRule = $(elem).find('p').text().trim();
+  // async saveUsForbidInfo() {
+  //   // const urlWithId = `${apiUsSearchUrl}`;
+  //   const urlWithId = 'https://www.tsa.gov/travel/security-screening/whatcanibring/all-list';
+  //   try {
+  //     const response = await axios.get(urlWithId);
+  //     const $ = load(response.data);
+  //     const trElements = $('.view-content > table > tbody > tr');
+  //     var i = 0
+  //     for (const elem of trElements) {
+  //       const engName = $(elem).find('strong').text().trim();
+  //       const specialRule = $(elem).find('p').text().trim();
 
-        const forbidRule = [];
-        const nationName = 'Canada';
-        $(elem).find('td > span').each((i, el) => {
-          const forbid = (i == 0) ? '기내휴대' : '위탁수하물';
+  //       const forbidRule = [];
+  //       const nationName = 'Canada';
+  //       $(elem).find('td > span').each((i, el) => {
+  //         const forbid = (i == 0) ? '기내휴대' : '위탁수하물';
 
-          const rules = $(el).text().trim();
-          if (rules) {
-            const checkForbid = rules.split(' ');
+  //         const rules = $(el).text().trim();
+  //         if (rules) {
+  //           const checkForbid = rules.split(' ');
 
-            const rule = checkForbid[0] == 'No' ? ' X' : ' O';
-            forbidRule.push(forbid + rule);
+  //           const rule = checkForbid[0] == 'No' ? ' X' : ' O';
+  //           forbidRule.push(forbid + rule);
 
-            if (checkForbid.length == 3 &&
-              checkForbid[1] + ' ' + checkForbid[2] == '(Special Instructions)') {
+  //           if (checkForbid.length == 3 &&
+  //             checkForbid[1] + ' ' + checkForbid[2] == '(Special Instructions)') {
 
-              if (!forbidRule.includes('특별조항')) {
-                forbidRule.push('특별조항');
-              }
-            }
-          }
-          else {
-            forbidRule.push($(el).text().trim())
-          }
-        })
-        const data = { korName:'', engName, forbidImg:[],forbidRule, specialRule, exampleImg:[], nationName };
+  //             if (!forbidRule.includes('특별조항')) {
+  //               forbidRule.push('특별조항');
+  //             }
+  //           }
+  //         }
+  //         else {
+  //           forbidRule.push($(el).text().trim())
+  //         }
+  //       })
+  //       const data = { korName:'', engName, forbidImg:[],forbidRule, specialRule, exampleImg:[], nationName };
   
-        this.forbidService.createForbidItem(data);
-      }
-      return response.data
-    } catch (error) {
-      console.log(error);
-      return new Error('웹페이지를 가져오지 못했습니다.');
-    }
-  }
+  //       this.forbidService.createForbidItem(data);
+  //     }
+  //     return response.data
+  //   } catch (error) {
+  //     console.log(error);
+  //     return new Error('웹페이지를 가져오지 못했습니다.');
+  //   }
+  // }
 
 
   async test() {
