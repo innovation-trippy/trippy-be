@@ -20,10 +20,11 @@ services:
       - ./nginx/conf:/etc/nginx/conf.d
     depends_on:
       - backend
-      - ai
+      - ai1
+      - ai2
 
-  ai:
-    container_name: ai
+  ai1:
+    container_name: ai1
     image: ai
     build:
       context: ../trippy-AI-be
@@ -31,3 +32,12 @@ services:
     ports:
       - "8000:8000"
     
+  
+  ai2:
+    container_name: ai2
+    image: ai
+    build:
+      context: ../trippy-AI-be
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8000"
