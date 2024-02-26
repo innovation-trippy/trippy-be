@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { AccessTokenGuard } from 'src/auth/guard/bearer_token.guard';
 
@@ -6,9 +6,9 @@ import { AccessTokenGuard } from 'src/auth/guard/bearer_token.guard';
 export class CommentController {
   constructor(private readonly commentService: CommentService) {}
 
-  @Get()
+  @Get(':itemId')
   getComment(
-    @Body('itemId') itemId:string, 
+    @Param('itemId') itemId, 
   ) {
     return this.commentService.getComment(itemId);
   }
