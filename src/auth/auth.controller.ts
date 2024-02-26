@@ -13,7 +13,7 @@ export class AuthController {
   ) { }
 
   // 카카오 로그인
-  @Get('login/kakao')
+  @Get('login/kakao') 
   async signInWithKakao(
     @Res() res,
   ): Promise<void> {
@@ -30,10 +30,15 @@ export class AuthController {
     const { accessToken, refreshToken } = await this.authService.getTokenWithKakao(
       req.user.user,
     );
-    res.cookie('kakaoToken', req.user.kakaoToken, { httpOnly: true });
-    res.cookie('accessToken', accessToken, { httpOnly: true });
-    res.cookie('refreshToken', refreshToken, { httpOnly: true });
-    return res.redirect('http://trippy.kr/check');
+    res.body = {
+      kakaoToken:  req.user.kakaoToken,
+      accessToken,
+      refreshToken,
+    }
+    res.redirect('http://trippy.kr/check')
+    // res.cookie('kakaoToken', req.user.kakaoToken, { httpOnly: true, sameSite: 'None', secure: false});
+    // res.cookie('accessToken', accessToken, { httpOnly: true });
+    // res.cookie('refreshToken', refreshToken, { httpOnly: true });
   }
 
   // 회원가입
