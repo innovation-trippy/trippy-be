@@ -18,7 +18,7 @@ export class AuthController {
     @Res() res,
   ): Promise<void> {
     const url = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=${this.configService.get('REST_API_KEY')}&redirect_uri=${this.configService.get('REDIRECT_URI')}`
-    res.redirect(url);
+    return res.redirect(url);
   }
 
   @Get('oauth')
