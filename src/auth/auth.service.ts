@@ -47,11 +47,6 @@ export class AuthService {
     // 이메일 유저 로그인
     async loginWithEmail(email, password) {
         const verifiedUser = await this.userService.signInUserWithEmail(email, password);
-
-        if (!verifiedUser) {
-            throw new UnauthorizedException('이메일에 해당하는 유저가 없습니다');
-        }
-
         return verifiedUser;
     }
 
