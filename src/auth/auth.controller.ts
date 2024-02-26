@@ -33,9 +33,7 @@ export class AuthController {
     res.cookie('kakaoToken', req.user.kakaoToken, { httpOnly: true });
     res.cookie('accessToken', accessToken, { httpOnly: true });
     res.cookie('refreshToken', refreshToken, { httpOnly: true });
-    return res.send({
-      message: 'success'
-    });
+    return res.redirect('http://trippy.kr/check');
   }
 
   // 회원가입
